@@ -83,7 +83,8 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   big_lon = max([lon1, lon2])
   small_lon = min([lon1, lon2])
 
-  within = [c for c in cities if (c.lat >= small_lat and c.lat <= big_lat) and (c.lon >= small_lon and c.lon <= big_lon)]
+  within = [c for c in cities if (c.lat >= small_lat and c.lat <= big_lat) and 
+                                  (c.lon >= small_lon and c.lon <= big_lon)]
 
   # TODO Ensure that the lat and lon valuse are all floats
   # Go through each city and check to see if it falls within 
@@ -91,4 +92,5 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
 
 
   return within
-print(cityreader_stretch(lat1, lon1, lat2, lon2, cities))
+for c in cityreader_stretch(lat1, lon1, lat2, lon2, cities):
+  print(c)
