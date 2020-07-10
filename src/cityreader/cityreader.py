@@ -1,11 +1,14 @@
 # Create a class to hold a city location. Call the class "City". It should have
 # fields for name, lat and lon (representing latitude and longitude).
 import csv
+
 class City():
   def __init__(self, name, lat, lon):
     self.name = name
     self.lat = lat
     self.lon = lon
+  def __repr__(self):
+        return f"{self.name}, {self.lat}, {self.lon}"
 # We have a collection of US cities with population over 750,000 stored in the
 # file "cities.csv". (CSV stands for "comma-separated values".)
 #
@@ -24,12 +27,12 @@ def cityreader(cities=[]):
   # TODO Implement the functionality to read from the 'cities.csv' file
   # For each city record, create a new City instance and add it to the 
   # `cities` list
-    with open('src/cityreader/cities.csv', newline='') as c:
-      reader = csv.reader(c)
-      cities = list(reader)
-    for city in cities:
-      print(city)
-      # city = City(city)
+    with open('src/cityreader/cities.csv', 'r') as csvfile:
+      csvreader = csv.reader(csvfile)
+      next(csvreader)
+      for row in csvreader:
+        cities.append(City(str(row[0]), float(row[3]), float(row[4])))
+
     return cities
 
 cityreader(cities)
@@ -68,13 +71,26 @@ for c in cities:
 # Salt Lake City: (40.7774,-111.9301)
 
 # TODO Get latitude and longitude values from the user
+lat1, lon1 = map(float, input('Enter first lat and lon: ').split(','))
+lat2, lon2 = map(float, input('Enter second lat and lon: ').split(','))
+
+
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   # within will hold the cities that fall within the specified region
-  within = []
+  lats = [lat1, lat2]
+  lons = [lon1, lon2]
+  big_lat = max(lats)
+  small_lat = min(lats)
+  big_lon = max(lons)
+  small_lon = min(lons)
+
+  within = [c for c in cities if (c.lat >= small_lat and c.lat <= big_lat) and (c.lon >= small_lon and c.lon <= big_lon)]
 
   # TODO Ensure that the lat and lon valuse are all floats
   # Go through each city and check to see if it falls within 
   # the specified coordinates.
 
+
   return within
+print(cityreader_stretch(lat1, lon1, lat2, lon2, cities))
